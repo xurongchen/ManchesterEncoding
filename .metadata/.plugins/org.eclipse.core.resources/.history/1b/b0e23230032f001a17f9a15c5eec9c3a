@@ -1,0 +1,8 @@
+package turingMachine;
+
+import java.util.LinkedList;
+
+public class TMTape {
+	private LinkedList<char > tapeContent;
+	
+}

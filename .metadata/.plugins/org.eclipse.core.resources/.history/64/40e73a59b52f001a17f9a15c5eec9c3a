@@ -1,0 +1,21 @@
+package gui;
+
+import java.awt.Container;
+
+import javax.swing.*;
+
+public class MainJFrame extends JFrame{
+	JButton jb;
+	public MainJFrame() {
+		jb = new JButton("S");
+		Container pane = this.getContentPane();
+		pane.add(jb);
+		this.setTitle("Manchester Encoding using TM");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		setSize(400,200);
+	}
+	public static void main(String[] args) {
+		new MainJFrame();
+	}
+}

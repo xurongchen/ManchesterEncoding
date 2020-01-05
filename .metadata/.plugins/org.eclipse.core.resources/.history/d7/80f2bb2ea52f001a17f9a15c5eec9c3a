@@ -1,0 +1,19 @@
+package tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import manchesterEncoding.ManchesterEncoding;
+
+class MachesterEncodingTests {
+
+	@Test
+	void test0() {
+		ManchesterEncoding me = new ManchesterEncoding("000101011111",false);
+		me.Execute();
+		assertEquals(me.getOutput().getTapeRemovedBlank(),"010101100110011010101010");
+		assertEquals(me.getInput().getTapeRemovedBlank(),"000101011111");
+	}
+
+}

@@ -1,0 +1,22 @@
+package turingMachine;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
+public class MultiTapeTuringMachine {
+	
+	private ArrayList<Character> Alphabet;
+	private ArrayList<String> TapeNames;
+	private ArrayList<TMState> StateNames;
+	private HashMap<String, TMTape> TapeDict;
+	
+	MultiTapeTuringMachine(Set<TMState> states, Set<Character> alphabet, Character blankSymbol, TMState initialState, Set<TMState> finalStates){
+		
+	}
+
+	public class Transation{
+		
+	}
+}
+

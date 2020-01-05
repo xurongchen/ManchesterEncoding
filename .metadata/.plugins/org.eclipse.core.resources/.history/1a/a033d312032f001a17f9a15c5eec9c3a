@@ -1,0 +1,6 @@
+package turingMachine;
+
+public class TMTape {
+	private List<char> tapeContent;
+	
+}

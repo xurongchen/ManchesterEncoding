@@ -1,0 +1,16 @@
+package turingMachine;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+
+public class TMTape {
+	private LinkedList<Character> tapeContent;
+	private Iterator<LinkedList<Character>> tapePosition;
+	
+	TMTape(String str){
+		tapeContent = new LinkedList<Character>();
+		for (Character character : str) {
+			
+		}
+	}
+}

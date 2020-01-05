@@ -1,0 +1,38 @@
+package turingMachine;
+
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+public class TMTape {
+	private LinkedList<Character> tapeContent;
+	private ListIterator<Character> tapePosition;
+	private Character blankCharacter;
+	
+	TMTape(String str, Character blank){
+		blankCharacter = blank;
+		tapeContent = new LinkedList<Character>();
+		for (int i=0; i<str.length(); ++i) {
+			tapeContent.add(str.charAt(i));
+		}
+		tapePosition = tapeContent.listIterator();
+	}
+	
+	public enum ShiftDirection{ Left, Right, No}
+	
+	void Left_shift(ShiftDirection direction, Character c)
+	{
+		tapePosition.set(c);
+		switch (direction) {
+		case Left:
+			if(!tapePosition.hasPrevious())
+				tapeContent.addFirst(blankCharacter);
+			break;
+		case Right:
+			
+			break;
+		default:
+			break;
+		}
+	}
+	
+}

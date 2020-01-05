@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="MachesterEncodingTests" project="ManchesterEncoding" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="tests.MachesterEncodingTests" time="0.018" displayname="MachesterEncodingTests" uniqueid="[engine:junit-jupiter]/[class:tests.MachesterEncodingTests]">
+    <testcase name="test0" classname="tests.MachesterEncodingTests" time="0.018" displayname="test0()" uniqueid="[engine:junit-jupiter]/[class:tests.MachesterEncodingTests]/[method:test0()]"/>
+  </testsuite>
+</testrun>

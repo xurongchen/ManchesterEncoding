@@ -1,0 +1,33 @@
+package manchesterEncoding;
+
+import java.util.ArrayList;
+
+import turingMachine.MultiTapeTuringMachine;
+import turingMachine.TMState;
+import turingMachine.TMTape;
+
+public class manchesterEncoding {
+	private TMTape input;
+	private TMTape output;
+	
+	private MultiTapeTuringMachine turingMachine;
+	
+	public manchesterEncoding(String input){
+		this.input = new TMTape(input, 'B');
+		this.output = new TMTape("", 'B');
+		ArrayList<Character> alphabet = new ArrayList<>();
+		alphabet.add('B');
+		alphabet.add('0');
+		alphabet.add('1');
+		ArrayList<TMState> states = new ArrayList<>();
+		states.add(new TMState("Qs"));
+		states.add(new TMState("Q_0@1"));
+		states.add(new TMState("Q_1"));
+		states.add(new TMState("Q_end"));
+		states.add(new TMState("Q_0"));
+		states.add(new TMState("Q_end"));
+		states.add(new TMState("Q_1"));
+		states.add(new TMState("Q_end"));
+		turingMachine = new MultiTapeTuringMachine(alphabet);
+	}
+}

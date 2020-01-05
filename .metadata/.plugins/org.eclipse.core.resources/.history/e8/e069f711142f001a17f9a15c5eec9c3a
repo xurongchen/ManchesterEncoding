@@ -1,0 +1,6 @@
+package turingMachine;
+
+public class TMState {
+	public String name;
+	
+}

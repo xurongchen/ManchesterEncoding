@@ -1,0 +1,13 @@
+package gui;
+
+import javax.swing.*;
+
+public class MainJFrame extends JFrame{
+	
+	public MainJFrame() {
+		this.setTitle("Manchester Encoding using TM");
+	}
+	public static void main(String[] args) {
+		new MainJFrame();
+	}
+}

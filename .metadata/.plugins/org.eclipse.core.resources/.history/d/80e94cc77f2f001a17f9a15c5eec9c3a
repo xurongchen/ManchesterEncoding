@@ -1,0 +1,7 @@
+package turingMachine;
+
+public class TMState {
+	private String name;
+	private boolean isFinal;
+	private boolean isStart;
+}

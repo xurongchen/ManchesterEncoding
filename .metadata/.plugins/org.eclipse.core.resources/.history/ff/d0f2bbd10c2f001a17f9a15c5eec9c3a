@@ -1,0 +1,60 @@
+package turingMachine;
+
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+public class TMTape {
+	private LinkedList<Character> tapeContent;
+	private ListIterator<Character> tapePosition;
+	private Character blankCharacter;
+	
+	TMTape(String str, Character blank) {
+		blankCharacter = blank;
+		tapeContent = new LinkedList<Character>();
+		for (int i=0; i<str.length(); ++i) {
+			tapeContent.add(str.charAt(i));
+		}
+		tapePosition = tapeContent.listIterator();
+	}
+	
+	public enum ShiftDirection{ Left, Right, No}
+	
+	void Left_shift(ShiftDirection direction, Character c) {
+		tapePosition.set(c);
+		switch (direction) {
+		case Left:
+			if(!tapePosition.hasPrevious())
+				tapePosition.add(blankCharacter);
+			tapePosition.previous();
+			break;
+		case Right:
+			if(!tapePosition.hasNext())
+				tapePosition.add(blankCharacter);
+			tapePosition.next();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public String getTape() {
+		StringBuilder stringBuilder = new StringBuilder();
+		for(ListIterator<Character> iterator = tapeContent.listIterator();iterator.hasNext();) {
+			stringBuilder.append(iterator.next());
+		}
+		return stringBuilder.toString();
+	}
+	public String getTapeRemovedBlank() {
+		StringBuilder stringBuilder = new StringBuilder();
+		ListIterator<Character> iteratorFront = tapeContent.listIterator();		
+		ListIterator<Character> iteratorEnd = tapeContent.listIterator();
+		while(iteratorFront.hasNext() && iteratorFront.next()==blankCharacter);
+		for(iteratorFront = tapeContent.listIterator();iterator.hasNext();) {
+			stringBuilder.append(iterator.next());
+		}
+		String tapeString = stringBuilder.toString();
+		tapeString.
+		return stringBuilder.toString();
+	}
+
+}

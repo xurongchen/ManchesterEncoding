@@ -1,0 +1,10 @@
+package turingMachine;
+
+import java.util.HashMap;
+
+public class TuringMachine {
+	private HashMap<String, TMTape> TapeDict;
+	
+
+}
+

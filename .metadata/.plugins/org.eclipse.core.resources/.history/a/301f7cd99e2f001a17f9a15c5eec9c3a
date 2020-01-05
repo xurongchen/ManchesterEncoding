@@ -1,0 +1,120 @@
+package manchesterEncoding;
+
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+
+import turingMachine.MultiTapeTuringMachine;
+import turingMachine.TMState;
+import turingMachine.TMTape;
+import turingMachine.TMTape.ShiftDirection;
+import turingMachine.MultiTapeTuringMachine.TransationFrom;
+import turingMachine.MultiTapeTuringMachine.TransationTo;
+import turingMachine.MultiTapeTuringMachine.Transations;
+
+public class manchesterEncoding {
+	private TMTape input;
+	private TMTape output;
+	
+	private MultiTapeTuringMachine turingMachine;
+	
+	private ArrayList<Map.Entry<TMTape, Character>> FromInfo(Character ic, Character oc){
+		ArrayList<Map.Entry<TMTape, Character>> from = new ArrayList<>();
+		from.add(new AbstractMap.SimpleEntry<>(input,ic));
+		from.add(new AbstractMap.SimpleEntry<>(output,oc));
+		return from;
+	}
+	private ArrayList<Map.Entry<TMTape, Map.Entry<Character, TMTape.ShiftDirection>>> 
+			ToInfo(Character ic, ShiftDirection id, Character oc, ShiftDirection od){
+		ArrayList<Map.Entry<TMTape, Map.Entry<Character, TMTape.ShiftDirection>>> to = new ArrayList<>();
+		to.add(new AbstractMap.SimpleEntry<>(input,new AbstractMap.SimpleEntry<>(ic,id)));
+		to.add(new AbstractMap.SimpleEntry<>(output,new AbstractMap.SimpleEntry<>(oc,od)));
+		return to;
+	}
+	
+	public manchesterEncoding(String input, boolean IEEE){
+		char One = IEEE? '0' :'1';
+		char Zero =  IEEE? '1' :'0';
+		TMState qs = new TMState("Qs");
+		TMState q0a1 = new TMState("Q0@1");
+		TMState q0a2 = new TMState("Q0@2");
+//		TMState q0a3 = new TMState("Q0@3");
+		TMState q1a1 = new TMState("Q1@1");
+		TMState q1a2 = new TMState("Q1@2");
+//		TMState q1a3 = new TMState("Q1@3");
+		TMState qe = new TMState("Qe");
+		this.input = new TMTape(input, 'B');
+		this.output = new TMTape("", 'B');
+		ArrayList<Character> alphabet = new ArrayList<>();
+		alphabet.add('B');
+		alphabet.add('0');
+		alphabet.add('1');
+		ArrayList<TMState> states = new ArrayList<>(Arrays.asList(qs, q0a1, q0a2, /*q0a3,*/ q1a1, q1a2, /*q1a3,*/ qe));
+		ArrayList<TMState> finalStates = new ArrayList<>(Arrays.asList(qe));
+		ArrayList<Map.Entry<TransationFrom, TransationTo>> deltaInArray = new ArrayList<>();
+		
+		// qs
+		for(Character ic : alphabet) {
+			for(Character oc : alphabet) {
+				TMState nextState = (ic == 'B') ? qe: ((ic == '1') ? q1a1: q0a1);
+				deltaInArray.add(new AbstractMap.SimpleEntry<>(
+						new TransationFrom(qs, FromInfo(ic,oc)), 
+						new TransationTo(nextState, ToInfo(ic, ShiftDirection.Right, oc,ShiftDirection.No))));
+			}
+		}
+		
+		// qe
+		for(Character ic : alphabet) {
+			for(Character oc : alphabet) {
+				deltaInArray.add(new AbstractMap.SimpleEntry<>(
+						new TransationFrom(qe, FromInfo(ic,oc)), 
+						new TransationTo(qe, ToInfo(ic, ShiftDirection.No, oc,ShiftDirection.No))));
+			}
+		}
+		
+		// q0a1
+		for(Character ic : alphabet) {
+			for(Character oc : alphabet) {
+				deltaInArray.add(new AbstractMap.SimpleEntry<>(
+						new TransationFrom(q0a1, FromInfo(ic,oc)), 
+						new TransationTo(q0a2, ToInfo(ic, ShiftDirection.No, Zero,ShiftDirection.Right))));
+			}
+		}
+		
+		// q0a2
+		for(Character ic : alphabet) {
+			for(Character oc : alphabet) {
+				deltaInArray.add(new AbstractMap.SimpleEntry<>(
+						new TransationFrom(q0a2, FromInfo(ic,oc)), 
+						new TransationTo(qs, ToInfo(ic, ShiftDirection.No, One,ShiftDirection.Right))));
+			}
+		}
+		
+		// q1a1
+		for(Character ic : alphabet) {
+			for(Character oc : alphabet) {
+				deltaInArray.add(new AbstractMap.SimpleEntry<>(
+						new TransationFrom(q1a1, FromInfo(ic,oc)), 
+						new TransationTo(q1a2, ToInfo(ic, ShiftDirection.No, One,ShiftDirection.Right))));
+			}
+		}
+		
+		// q1a2
+		for(Character ic : alphabet) {
+			for(Character oc : alphabet) {
+				deltaInArray.add(new AbstractMap.SimpleEntry<>(
+						new TransationFrom(q1a2, FromInfo(ic,oc)), 
+						new TransationTo(qs, ToInfo(ic, ShiftDirection.No, Zero,ShiftDirection.Right))));
+			}
+		}
+		
+		Transations trans = new Transations(deltaInArray);
+		this.turingMachine = new MultiTapeTuringMachine(states, alphabet, 'B', trans, qs, finalStates);
+	}
+	
+	void ExecuteOneStep() {
+		turingMachine.Move();
+	}
+	
+}

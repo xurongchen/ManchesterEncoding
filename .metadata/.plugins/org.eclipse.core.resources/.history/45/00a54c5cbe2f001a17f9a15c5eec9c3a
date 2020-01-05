@@ -1,0 +1,40 @@
+package gui;
+
+import java.awt.*;
+
+import javax.swing.*;
+
+public class MainJFrame extends JFrame{
+	JLabel label;
+	JButton jb;
+	JLabel inputLabel = new JLabel("  Input:  ");
+	JTextField inputTextField = new JTextField();
+	public MainJFrame() {
+		jb = new JButton("S");
+		Container pane = this.getContentPane();
+		GridBagLayout gbaglayout = new GridBagLayout();
+		GridBagConstraints constraints = new GridBagConstraints();
+		this.setLayout(gbaglayout);
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.weightx = 0;
+		gbaglayout.setConstraints(inputLabel, constraints);
+		inputLabel.setSize(1000, 300);
+		pane.add(inputLabel);
+		
+		constraints.weightx = 0;
+		gbaglayout.setConstraints(inputTextField, constraints);
+		
+		pane.add(inputTextField);
+		
+		constraints.gridwidth = GridBagConstraints.REMAINDER;
+		
+//		pane.add(jb);
+		this.setTitle("Manchester Encoding using TM");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		setSize(400,200);
+	}
+	public static void main(String[] args) {
+		new MainJFrame();
+	}
+}

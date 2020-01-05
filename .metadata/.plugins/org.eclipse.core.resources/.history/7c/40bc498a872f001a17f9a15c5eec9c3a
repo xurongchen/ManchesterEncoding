@@ -1,0 +1,81 @@
+package turingMachine;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+public class MultiTapeTuringMachine {
+	
+	private Set<Character> Alphabet;
+	private Character BlankSymbol;
+	private Transations delta;
+	private ArrayList<String> TapeNames;
+	private Set<TMState> StateNames;
+	private HashMap<String, TMTape> TapeDict;
+	
+	MultiTapeTuringMachine(Set<TMState> states, Set<Character> alphabet, Character blankSymbol, Transations delta, TMState initialState, Set<TMState> finalStates){
+		
+	}
+
+	public class Transations{
+		public class From{
+			TMState state;
+			ArrayList<Map.Entry<TMTape, Character>> tapeCharacters;
+
+			From(TMState state, ArrayList<Map.Entry<TMTape, Character>> tapeCharacters){
+				this.state = state;
+				this.tapeCharacters = new ArrayList<>(tapeCharacters);
+				Collections.sort(this.tapeCharacters, (Map.Entry<TMTape, Character> a, Map.Entry<TMTape, Character> b) -> 
+					(a.getKey().getTMTapeIdentifier() - b.getKey().getTMTapeIdentifier()));
+			}
+			@Override
+			public int hashCode() {
+				final int prime = 31;
+				int result = 1;
+				result = prime * result + getEnclosingInstance().hashCode();
+				result = prime * result + ((state == null) ? 0 : state.hashCode());
+				result = prime * result + ((tapeCharacters == null) ? 0 : tapeCharacters.hashCode());
+				return result;
+			}
+			@Override
+			public boolean equals(Object obj) {
+				if (this == obj)
+					return true;
+				if (obj == null)
+					return false;
+				if (getClass() != obj.getClass())
+					return false;
+				From other = (From) obj;
+				if (!getEnclosingInstance().equals(other.getEnclosingInstance()))
+					return false;
+				if (state == null) {
+					if (other.state != null)
+						return false;
+				} else if (!state.equals(other.state))
+					return false;
+				if (tapeCharacters == null) {
+					if (other.tapeCharacters != null)
+						return false;
+				} else if (!tapeCharacters.equals(other.tapeCharacters))
+					return false;
+				return true;
+			}
+			private Transations getEnclosingInstance() {
+				return Transations.this;
+			}
+			
+		}
+		public class To{
+			TMState state;
+			ArrayList<Map.Entry<TMTape, Map.Entry<Character, TMTape.ShiftDirection>>> operations;
+		}
+		ArrayList<Map.Entry<From, To>> delta;
+		Transations(ArrayList<Map.Entry<From, To>> delta){
+			this.delta = delta;
+		}
+	}
+}
+

@@ -1,0 +1,124 @@
+package turingMachine;
+
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+public class MultiTapeTuringMachine {
+	
+	private ArrayList<Character> Alphabet;
+	private Character BlankSymbol;
+	private Transations Delta;
+//	private ArrayList<String> TapeNames;
+	private ArrayList<TMState> States;
+	private ArrayList<TMTape> Tapes;
+	private TMState nowState;
+	
+	MultiTapeTuringMachine(ArrayList<TMState> states, ArrayList<Character> alphabet, Character blankSymbol, Transations delta, TMState initialState, ArrayList<TMState> finalStates) throws RuntimeException{
+		this.Alphabet = new ArrayList<>();
+		for(Character c : alphabet) {
+			if(!this.Alphabet.contains(c))
+				throw new RuntimeException("Dupliate character in alphabet.");
+			this.Alphabet.add(c);
+		}
+		if(!this.Alphabet.contains(blankSymbol))
+			throw new RuntimeException("Blank symbol not found in alphabet.");
+		this.BlankSymbol = blankSymbol;
+		this.States = new ArrayList<>();
+		for(TMState s : states) {
+			if(!this.States.contains(s))
+				throw new RuntimeException("Dupliate state in states.");
+			this.States.add(s);
+		}
+		int initStateIndex;
+		if((initStateIndex = this.States.indexOf(initialState)) == -1)
+			throw new RuntimeException("Initial state not found in states.");
+		this.States.get(initStateIndex).setStart(true);
+		nowState = this.States.get(initStateIndex);
+		for(TMState s : finalStates) {
+			int finalStateIndex;
+			if((finalStateIndex = this.States.indexOf(s)) == -1)
+				throw new RuntimeException("One of final states not found in states.");
+			this.States.get(finalStateIndex).setFinal(true);
+		}
+		this.Delta = delta;
+		this.Tapes = new ArrayList<>();
+		if(delta.delta.size()==0) throw new RuntimeException("Transation size is 0.");
+		Transations.From fisrtFrom = delta.delta.get(0).getKey();
+		for(Map.Entry<TMTape, Character> tape_character_pair : fisrtFrom.tapeCharacters) {
+			this.Tapes.add(tape_character_pair.getKey());
+		}
+	}
+
+	public class Transations{
+		public class From{
+			TMState state;
+			ArrayList<Map.Entry<TMTape, Character>> tapeCharacters;
+			From(TMState state, ArrayList<Map.Entry<TMTape, Character>> tapeCharacters){
+				this.state = state;
+				this.tapeCharacters = new ArrayList<>(tapeCharacters);
+				Collections.sort(this.tapeCharacters, (Map.Entry<TMTape, Character> a, Map.Entry<TMTape, Character> b) -> 
+					(a.getKey().getTMTapeIdentifier() - b.getKey().getTMTapeIdentifier()));
+			}
+			@Override
+			public int hashCode() {
+				final int prime = 31;
+				int result = 1;
+				result = prime * result + getEnclosingInstance().hashCode();
+				result = prime * result + ((state == null) ? 0 : state.hashCode());
+				result = prime * result + ((tapeCharacters == null) ? 0 : tapeCharacters.hashCode());
+				return result;
+			}
+			@Override
+			public boolean equals(Object obj) {
+				if (this == obj)
+					return true;
+				if (obj == null)
+					return false;
+				if (getClass() != obj.getClass())
+					return false;
+				From other = (From) obj;
+				if (!getEnclosingInstance().equals(other.getEnclosingInstance()))
+					return false;
+				if (state == null) {
+					if (other.state != null)
+						return false;
+				} else if (!state.equals(other.state))
+					return false;
+				if (tapeCharacters == null) {
+					if (other.tapeCharacters != null)
+						return false;
+				} else if (!tapeCharacters.equals(other.tapeCharacters))
+					return false;
+				return true;
+			}
+			private Transations getEnclosingInstance() {
+				return Transations.this;
+			}
+			
+		}
+		public class To{
+			TMState state;
+			ArrayList<Map.Entry<TMTape, Map.Entry<Character, TMTape.ShiftDirection>>> operations;
+		}
+		ArrayList<Map.Entry<From, To>> delta;
+		Transations(ArrayList<Map.Entry<From, To>> delta){
+			this.delta = new ArrayList<>(delta);
+		}
+		
+	}
+	public boolean Move() {
+		ArrayList<Map.Entry<TMTape, Character>> tapeCharacters = new ArrayList<>();
+		for(TMTape t : this.Tapes) {
+			tapeCharacters.add(new AbstractMap.SimpleEntry<>(t, t.now()));
+		}
+		Transations.From from = new Transations.From(nowState,tapeCharacters);
+		return this.nowState.isFinal();
+	}
+}
+

@@ -1,0 +1,15 @@
+package tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class MachesterEncodingTests {
+
+	@Test
+	void test0() {
+		fail("Not yet implemented");
+		
+	}
+
+}

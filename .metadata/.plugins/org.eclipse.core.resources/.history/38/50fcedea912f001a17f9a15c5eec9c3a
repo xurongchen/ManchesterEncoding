@@ -1,0 +1,8 @@
+package manchesterEncoding;
+
+import turingMachine.TMTape;
+
+public class manchesterEncoding {
+	private TMTape input;
+	private TMTape output;
+}

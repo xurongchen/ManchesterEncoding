@@ -1,0 +1,31 @@
+package turingMachine;
+
+public class TMState {
+	private String stateName;
+	private boolean isFinal;
+	private boolean isStart;
+	TMState(String name, boolean isFinalState, boolean isStartState){
+		stateName = name;
+		isFinal = isFinalState;
+		isStart = isStartState;
+	}
+	public String getStateName() {
+		return stateName;
+	}
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+	public boolean isFinal() {
+		return isFinal;
+	}
+	public void setFinal(boolean isFinal) {
+		this.isFinal = isFinal;
+	}
+	public boolean isStart() {
+		return isStart;
+	}
+	public void setStart(boolean isStart) {
+		this.isStart = isStart;
+	}
+	
+}

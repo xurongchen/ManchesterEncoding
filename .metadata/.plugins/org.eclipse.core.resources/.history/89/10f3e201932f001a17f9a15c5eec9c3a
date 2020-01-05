@@ -1,0 +1,16 @@
+package manchesterEncoding;
+
+import turingMachine.MultiTapeTuringMachine;
+import turingMachine.TMTape;
+
+public class manchesterEncoding {
+	private TMTape input;
+	private TMTape output;
+	
+	private MultiTapeTuringMachine turingMachine;
+	
+	manchesterEncoding(String input){
+		this.input = new TMTape(input);
+		
+	}
+}

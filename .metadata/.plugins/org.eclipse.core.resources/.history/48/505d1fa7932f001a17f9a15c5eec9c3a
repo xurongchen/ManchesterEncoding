@@ -1,0 +1,55 @@
+package turingMachine;
+
+public class TMState {
+	private String stateName;
+	private boolean isFinal;
+	public void setFinal(boolean isFinal) {
+		this.isFinal = isFinal;
+	}
+	public void setStart(boolean isStart) {
+		this.isStart = isStart;
+	}
+	private boolean isStart;
+	public TMState(String name){
+		this.stateName = name;
+		this.isFinal = false;
+		this.isStart = false;
+	}
+	TMState(String name, boolean isFinal, boolean isStart){
+		this.stateName = name;
+		this.isFinal = isFinal;
+		this.isStart = isStart;
+	}
+	public String getStateName() {
+		return stateName;
+	}
+	public boolean isFinal() {
+		return isFinal;
+	}
+	public boolean isStart() {
+		return isStart;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((stateName == null) ? 0 : stateName.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TMState other = (TMState) obj;
+		if (stateName == null) {
+			if (other.stateName != null)
+				return false;
+		} else if (!stateName.equals(other.stateName))
+			return false;
+		return true;
+	}
+}
